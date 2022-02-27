@@ -10,8 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const harmful = require("./files/harmful.json");
+const names = require("./files/names.json");
 
-var composition = "";
+var additiveInfo = null;
 
 // --- запросы на сервер ---
 // app.get();
@@ -20,20 +21,22 @@ var composition = "";
 // app.patch();
 // app.delete();
 
-// ===>  http://localhost:3001/test
-app.get("/test", (req, res) => {
-  console.log(harmful);
-  //   res.send(harmful);
+// ===>  http://localhost:3001/names
+app.get("/names", (req, res) => {
+  console.log("go-go-go Names List");
+  res.send(names);
   //   res.json(harmful);
 });
 
-app.post("/test", (req, res) => {
-  const newStr = req.body;
-  if (newStr === String) {
-    composition = newObj;
-    res.json(composition);
+app.post("/info", (req, res) => {
+  console.log("post", req.body.name);
+  const newStr = req.body.name;
+  if (typeof newStr === "string") {
+    additiveInfo = harmful.find((item) => item.name === newStr);
+    res.send(additiveInfo);
+  } else {
+    res.sendStatus(400);
   }
-  res.sendStatus(400);
 });
 
 // http://localhost:3001 -- наш хост

@@ -1,19 +1,32 @@
 <template>
-  <div>
-    <TextComp msg="Hello world" />
-    <test-backend />
+  <div id="app">
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </nav>
+    <router-view/>
   </div>
 </template>
 
-<script>
-import TestBackend from "./components/backendTesT/TestBackend.vue";
-import TextComp from "./components/TextComp.vue";
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-export default {
-  name: "App",
-  components: {
-    TextComp,
-    TestBackend,
-  },
-};
-</script>
+nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>

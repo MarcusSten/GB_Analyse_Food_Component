@@ -36,15 +36,16 @@
             </v-btn>
           </v-col>
           <v-col>
-            <ul>
-              <li v-for="(item, index) in items" :key="index">
-                <output-form :card-data="item" :key="index">
-                </output-form>
-              </li>
-
-            </ul>
-
-
+            <v-expansion-panels focusable>
+              <v-expansion-panel
+                v-for="(item, index) in items" :key="index"
+              >
+                <v-expansion-panel-header>{{item.name}}</v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <output-form :card-data="item" :key="index" class=""></output-form>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-col>
         </v-row>
       </v-container>
@@ -70,6 +71,7 @@ export default {
       separatedList: [],
       items: [],
       result: {},
+      active: false,
     }
   },
   components: {

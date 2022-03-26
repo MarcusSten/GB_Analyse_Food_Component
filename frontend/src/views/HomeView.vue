@@ -40,13 +40,64 @@
               <v-expansion-panel
                 v-for="(item, index) in items" :key="index"
               >
-                <v-expansion-panel-header>{{item.name}}</v-expansion-panel-header>
+                <v-expansion-panel-header v-if="item.description !== 'Not Found'">
+                  {{result.name}} - {{item.name}}
+                  <v-rating v-model="item.harmNum">
+                    <template v-slot:item="props">
+                      <v-icon
+                        :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
+                        large
+                      >
+                        {{ props.isFilled ? 'mdi-cards-heart' : 'mdi-cards-heart' }}
+                      </v-icon>
+                    </template>
+                  </v-rating>
+                  
+                </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <output-form :card-data="item" :key="index" class=""></output-form>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
           </v-col>
+        </v-row>
+      </v-container>
+      <v-container>
+        <v-row>
+          <v-col cols="30" sm="6">
+          </v-col>
+          <v-col>
+        <v-card v-if="notFound.length !== 0"
+        >
+          <v-toolbar
+            color="error"
+            dark
+          >
+            <v-toolbar-title>Не найдено</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <v-list two-line>
+            <v-list-item-group
+              active-class="pink--text"
+         
+            >
+              <template v-for="(item, index) in items">
+                <v-list-item :key="item.name" v-if="item.description === 'Not Found'">
+                  <template>
+                    <v-list-item-content>
+                      <v-list-item-title class="text-left" v-text="item.name"></v-list-item-title>
+                    </v-list-item-content>
+                  </template>
+                </v-list-item>
+                <v-divider
+                  v-if="index < items.length - 1"
+                  :key="index"
+                ></v-divider>
+              </template>
+            </v-list-item-group>
+          </v-list>
+        </v-card>
+        </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -71,7 +122,8 @@ export default {
       separatedList: [],
       items: [],
       result: {},
-      active: false,
+      colors: ['light-green accent-3', 'lime accent-2', 'orange', 'orange darken-4', 'deep-orange darken-4'],
+      notFound: [],
     }
   },
   components: {
@@ -82,6 +134,7 @@ export default {
     check() {
       this.items = [];
       this.result = {};
+      this.notFound = [];
       this.separatedList = this.enteredText.split(",").map((el) => el.trim())
       this.separatedList.map(async (element) => {
         await this.get_description(element);
@@ -93,6 +146,9 @@ export default {
       // console.log(this.result)
 
     },
+    genColor (i) {
+      return this.colors[i]
+    },
 
     async get_description(additiveName) {
       let response = await fetch("http://localhost:3001/names/" + additiveName);
@@ -101,6 +157,7 @@ export default {
         this.result = json
       } else {
         this.result = {"name": additiveName, "description": "Not Found"}
+        this.notFound.push(this.result)
       }
     }
   }

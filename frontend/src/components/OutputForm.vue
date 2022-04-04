@@ -90,9 +90,9 @@ export default {
   name: "OutputForm",
   props: ["cardData", "test"],
   data(){
-  return{
-    reveal: false,
-  }
+    return{
+      reveal: false,
+    }
   }
 }
 </script>

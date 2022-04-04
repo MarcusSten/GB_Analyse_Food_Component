@@ -11,7 +11,14 @@
         <v-app-bar-title class="d-flex align-center pl-6">
           <h2>Analyse <span class="red--text">Food</span> Components</h2>
         </v-app-bar-title>
-
+        <v-spacer></v-spacer>
+        <v-btn 
+          class="d-flex align-self-center"
+          color="error"
+          to="/about"
+          >
+          О Проекте
+        </v-btn>
       </v-col>
     </v-app-bar>
     <v-main>

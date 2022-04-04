@@ -40,19 +40,28 @@
               <v-expansion-panel
                 v-for="(item, index) in items" :key="index"
               >
-                <v-expansion-panel-header v-if="item.description !== 'Not Found'">
-                  {{result.name}} - {{item.name}}
-                  <v-rating v-model="item.harmNum">
-                    <template v-slot:item="props">
-                      <v-icon
-                        :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
-                        large
+                <v-expansion-panel-header v-if="item.description !== 'Not Found'" class="item-title">
+                  {{item.name}}
+                  <v-tooltip bottom color="white">
+                    <template v-slot:activator="{ on, attrs }">
+                      <span
+                        v-bind="attrs"
+                        v-on="on"
                       >
-                        {{ props.isFilled ? 'mdi-cards-heart' : 'mdi-cards-heart' }}
-                      </v-icon>
+                        <v-rating v-model="item.harmNum">
+                          <template v-slot:item="props">
+                            <v-icon
+                              :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
+                              medium
+                            >
+                              {{ props.isFilled ? 'mdi-cards-heart' : 'mdi-cards-heart-outline' }}
+                            </v-icon>
+                          </template>
+                        </v-rating>
+                      </span>
                     </template>
-                  </v-rating>
-                  
+                    <span class="item-title">Вред добавки - {{item.name}}</span>
+                  </v-tooltip>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <output-form :card-data="item" :key="index" class=""></output-form>
@@ -82,7 +91,7 @@
          
             >
               <template v-for="(item, index) in items">
-                <v-list-item :key="item.name" v-if="item.description === 'Not Found'">
+                <v-list-item :key="item.name" v-if="item.description === 'Not Found'" class="item-title">
                   <template>
                     <v-list-item-content>
                       <v-list-item-title class="text-left" v-text="item.name"></v-list-item-title>
@@ -164,13 +173,18 @@ export default {
 }
 </script>
 <style>
-.text {
-  color: black;
-  text-align: left;
-  margin-bottom: 10px;
-}
+  .text {
+    color: black;
+    text-align: left;
+    margin-bottom: 10px;
+  }
 
-.check-btn {
-  float: right
-}
+  .check-btn {
+    float: right
+  }
+
+  .item-title {
+    font-weight: bold;
+    color: black;
+  }
 </style>

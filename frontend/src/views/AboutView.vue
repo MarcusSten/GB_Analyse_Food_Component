@@ -30,48 +30,46 @@
           nodes: [
             {
                 id: 1,
-                x: -290,
-                y: 170,
+                x: -180,
+                y: 150,
                 type: 'Project',
-                label: 'Конечный продукт',
+                label: '',
             },
             {
                 id: 2,
-                x: -350,
-                y: -130,
+                x: -180,
+                y: -110,
                 type: 'Vue',
-                label: 'Vue CLI',
+                label: '',
             },
             {
                 id: 3,
                 x: -290,
                 y: 20,
-                type: 'Webpack',
-                label: 'Сборка',
+                type: 'Vue CLI',
+                label: '',
             },
             {
                 id: 4,
-                x: -460,
-                y: -130,
+                x: -400,
+                y: 150,
                 type: 'Node',
-                label: 'Бэкенд + БД',
+                label: '',
             },
             {
                 id: 5,
-                x: -130,
-                y: -130,
+                x: -400,
+                y: -110,
                 type: 'Vuetify',
-                label: 'Оформление',
-            },
-            {
-                id: 6,
-                x: -240,
-                y: -130,
-                type: 'Design',
-                label: 'Дизайн + UI/UX',
+                label: '',
             },
           ],
             links: [
+            {
+                id: 1,
+                from: 1,
+                to: 4,
+            },
             {
                 id: 2,
                 from: 2,
@@ -85,16 +83,11 @@
             {
                 id: 4,
                 from: 4,
-                to: 3,
+                to: 1,
             },
             {
                 id: 5,
                 from: 5,
-                to: 3,
-            },
-            {
-                id: 6,
-                from: 6,
                 to: 3,
             },
           ]
@@ -113,9 +106,11 @@
 
 <style>
   .stack-container .flowchart-node .node-main .node-type {
-    background-color: #ff5252;
+    color: #ff5252;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
+    background-color: white;
+    margin-top: 20px;
   }
 
   .stack-container .flowchart-node {

@@ -8,7 +8,7 @@
               max-width="55"
               src="../assets/icons8-food-64.png"></v-img>
         </v-app-bar-nav-icon>
-        <v-app-bar-title class="d-flex align-center pl-6">
+        <v-app-bar-title class=" align-center pl-6 d-none d-sm-flex d-sm-none">
           <h2>Analyse <span class="red--text">Food</span> Components</h2>
         </v-app-bar-title>
         <v-spacer></v-spacer>

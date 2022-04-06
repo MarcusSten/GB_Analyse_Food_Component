@@ -39,14 +39,14 @@
                 id: 2,
                 x: -180,
                 y: -110,
-                type: 'Vue',
+                type: 'Vue CLI',
                 label: '',
             },
             {
                 id: 3,
                 x: -290,
                 y: 20,
-                type: 'Vue CLI',
+                type: 'Vue',
                 label: '',
             },
             {

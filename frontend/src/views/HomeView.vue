@@ -93,16 +93,32 @@
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-list two-line>
-            <v-list-item-group
-              active-class="pink--text"
-         
-            >
+            <v-list-item-group>
               <template v-for="(item, index) in items">
                 <v-list-item :key="item.name" v-if="item.description === 'Not Found'" class="item-title">
                   <template>
                     <v-list-item-content>
                       <v-list-item-title class="text-left" v-text="item.name"></v-list-item-title>
                     </v-list-item-content>
+                    <v-tooltip bottom color="white">
+                      <template v-slot:activator="{ on, attrs }">
+                        <span
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <a v-bind:href="`https://yandex.ru/search/?text=` + item.name"
+                            target="_blank"
+                            class="link-not-found"
+                            icon
+                            >
+                            <v-icon color="grey lighten-1">
+                              mdi-open-in-new
+                            </v-icon>
+                          </a>
+                        </span>
+                      </template>
+                      <span class="item-tooltip">Поиск в интернете информации о добавке - {{item.name}}</span>
+                    </v-tooltip>
                   </template>
                 </v-list-item>
                 <v-divider
@@ -193,5 +209,20 @@ export default {
   .item-title {
     font-weight: bold;
     color: black;
+  }
+
+  .link-not-found {
+    text-decoration:none;
+  }
+
+  .v-list-item__title .text-left {
+    padding-right: 60px;
+  }
+
+  .item-tooltip {
+    font-weight: bold;
+    color: black;
+    margin-top: 10px;
+    cursor: default;
   }
 </style>

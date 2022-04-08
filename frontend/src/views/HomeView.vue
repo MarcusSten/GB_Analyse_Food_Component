@@ -45,7 +45,7 @@
           <v-col>
             <v-expansion-panels focusable>
               <v-expansion-panel
-                v-for="(item, index) in items" :key="index"
+                v-for="(item, index) in isFound" :key="index"
               >
                 <v-expansion-panel-header v-if="item.description !== 'Not Found'" class="item-title">
                   {{item.name}}
@@ -78,6 +78,11 @@
           </v-col>
         </v-row>
       </v-container>
+      {{notFound}}
+      <v-spacer></v-spacer>
+      ------------------
+      <v-spacer></v-spacer>
+      
       <v-container>
         <v-row>
           <v-col cols="30" sm="6">
@@ -166,8 +171,10 @@ export default {
     check() {
       this.items = [];
       this.result = {};
+      this.isFound = [];
       this.notFound = [];
-      this.separatedList = this.enteredText.split(",").map((el) => el.trim())
+      const regExp = /,|\(/;
+      this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
       this.separatedList.map(async (element) => {
         await this.get_description(element);
         this.items.push(this.result)
@@ -187,6 +194,7 @@ export default {
       if (response.ok) {
         let json = await response.json();
         this.result = json
+        this.isFound.push(this.result)
       } else {
         this.result = {"name": additiveName, "description": "Not Found"}
         this.notFound.push(this.result)

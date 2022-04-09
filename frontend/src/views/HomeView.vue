@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <v-app>
     <v-app-bar min-height="80" app>
@@ -45,7 +46,7 @@
           <v-col>
             <v-expansion-panels focusable>
               <v-expansion-panel
-                v-for="(item, index) in items" :key="index"
+                v-for="(item, index) in isFound" :key="index"
               >
                 <v-expansion-panel-header v-if="item.description !== 'Not Found'" class="item-title">
                   {{item.name}}
@@ -95,7 +96,7 @@
           <v-list two-line>
             <v-list-item-group>
               <template v-for="(item, index) in items">
-                <v-list-item :key="item.name" v-if="item.description === 'Not Found'" class="item-title">
+                <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found'" class="item-title">
                   <template>
                     <v-list-item-content>
                       <v-list-item-title class="text-left" v-text="item.name"></v-list-item-title>
@@ -152,6 +153,7 @@ export default {
     return {
       enteredText: "",
       separatedList: [],
+      isFound: [],
       items: [],
       result: {},
       colors: ['light-green accent-3', 'lime accent-2', 'orange', 'orange darken-4', 'deep-orange darken-4'],
@@ -166,8 +168,12 @@ export default {
     check() {
       this.items = [];
       this.result = {};
+      this.isFound = [];
       this.notFound = [];
-      this.separatedList = this.enteredText.split(",").map((el) => el.trim())
+      const regExp = /,|\(/;
+      
+      this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
+      console.table(this.isFound)
       this.separatedList.map(async (element) => {
         await this.get_description(element);
         this.items.push(this.result)
@@ -183,10 +189,12 @@ export default {
     },
 
     async get_description(additiveName) {
-      let response = await fetch("http://localhost:3001/names/" + additiveName);
+      // eslint-disable-next-line
+      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+]/g, ''));
       if (response.ok) {
         let json = await response.json();
         this.result = json
+        this.isFound.push(this.result)
       } else {
         this.result = {"name": additiveName, "description": "Not Found"}
         this.notFound.push(this.result)

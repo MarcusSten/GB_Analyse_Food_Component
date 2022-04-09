@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <v-app>
     <v-app-bar min-height="80" app>
@@ -78,11 +79,6 @@
           </v-col>
         </v-row>
       </v-container>
-      {{notFound}}
-      <v-spacer></v-spacer>
-      ------------------
-      <v-spacer></v-spacer>
-      
       <v-container>
         <v-row>
           <v-col cols="30" sm="6">
@@ -100,7 +96,7 @@
           <v-list two-line>
             <v-list-item-group>
               <template v-for="(item, index) in items">
-                <v-list-item :key="item.name" v-if="item.description === 'Not Found'" class="item-title">
+                <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found'" class="item-title">
                   <template>
                     <v-list-item-content>
                       <v-list-item-title class="text-left" v-text="item.name"></v-list-item-title>
@@ -157,6 +153,7 @@ export default {
     return {
       enteredText: "",
       separatedList: [],
+      isFound: [],
       items: [],
       result: {},
       colors: ['light-green accent-3', 'lime accent-2', 'orange', 'orange darken-4', 'deep-orange darken-4'],
@@ -174,7 +171,9 @@ export default {
       this.isFound = [];
       this.notFound = [];
       const regExp = /,|\(/;
+      
       this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
+      console.table(this.isFound)
       this.separatedList.map(async (element) => {
         await this.get_description(element);
         this.items.push(this.result)
@@ -190,7 +189,8 @@ export default {
     },
 
     async get_description(additiveName) {
-      let response = await fetch("http://localhost:3001/names/" + additiveName);
+      // eslint-disable-next-line
+      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+]/g, ''));
       if (response.ok) {
         let json = await response.json();
         this.result = json

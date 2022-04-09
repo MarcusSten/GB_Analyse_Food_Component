@@ -88,7 +88,7 @@
 <script>
 export default {
   name: "OutputForm",
-  props: ["cardData", "test"],
+  props: ["cardData"],
   data(){
     return{
       reveal: false,

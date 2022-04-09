@@ -49,14 +49,14 @@
                 v-for="(item, index) in isFound" :key="index"
               >
                 <v-expansion-panel-header v-if="item.description !== 'Not Found'" class="item-title">
-                  {{item.name}}
+                  {{ nameFormat(item.name, item.searchName) }}
                   <v-tooltip bottom color="white">
                     <template v-slot:activator="{ on, attrs }">
                       <span
                         v-bind="attrs"
                         v-on="on"
                       >
-                        <v-rating v-model="item.harmNum">
+                        <v-rating v-model="item.harmNum" class="rating">
                           <template v-slot:item="props">
                             <v-icon
                               :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
@@ -99,7 +99,7 @@
                 <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found'" class="item-title">
                   <template>
                     <v-list-item-content>
-                      <v-list-item-title class="text-left" v-text="item.name"></v-list-item-title>
+                      <v-list-item-title class="text-left" v-text="nameFormat(item.name)"></v-list-item-title>
                     </v-list-item-content>
                     <v-tooltip bottom color="white">
                       <template v-slot:activator="{ on, attrs }">
@@ -143,8 +143,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
 import OutputForm from "@/components/OutputForm";
 
 export default {
@@ -173,11 +171,13 @@ export default {
       const regExp = /,|\(/;
       
       this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
-      console.table(this.isFound)
+
       this.separatedList.map(async (element) => {
         await this.get_description(element);
         this.items.push(this.result)
       })
+
+      console.log(this.isFound, 'this.isFound')
 
       // this.get_description(this.separatedList[0])
       // console.log(typeof this.result)
@@ -188,15 +188,33 @@ export default {
       return this.colors[i]
     },
 
+    nameFormat(name, searchName){
+      let str = ''
+
+      if(searchName){
+
+        if(searchName.toUpperCase() === name.toUpperCase()) {
+          str = searchName.toString()
+        } else {
+          str = `${ searchName + ' (' + name + ')'}`
+        }
+
+      } else {
+        str = name
+      }
+
+      return str[0].toUpperCase() + str.slice(1);
+    },
+
     async get_description(additiveName) {
       // eslint-disable-next-line
-      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+]/g, ''));
+      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\)\+]/g, ''));
       if (response.ok) {
         let json = await response.json();
         this.result = json
-        this.isFound.push(this.result)
+        this.isFound.push({ searchName: additiveName.replace(/\)/g, ''), ...this.result })
       } else {
-        this.result = {"name": additiveName, "description": "Not Found"}
+        this.result = {"name": additiveName.replace(/\)/g, ''), "description": "Not Found"}
         this.notFound.push(this.result)
       }
     }
@@ -232,5 +250,10 @@ export default {
     color: black;
     margin-top: 10px;
     cursor: default;
+  }
+
+  .rating {
+    text-align: end;
+    margin-right: 30px;
   }
 </style>

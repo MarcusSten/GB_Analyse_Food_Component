@@ -44,6 +44,7 @@
             </v-btn>
           </v-col>
           <v-col>
+          <DiagramComp />
             <v-expansion-panels focusable>
               <v-expansion-panel
                 v-for="(item, index) in isFound" :key="index"
@@ -144,6 +145,7 @@
 
 <script>
 import OutputForm from "@/components/OutputForm";
+import DiagramComp from "../components/DiagramComp.vue";
 
 export default {
   name: 'HomeView',
@@ -159,7 +161,8 @@ export default {
     }
   },
   components: {
-    OutputForm
+    OutputForm,
+    DiagramComp
     // HelloWorld
   },
   methods: {

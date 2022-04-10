@@ -44,7 +44,7 @@
             </v-btn>
             <div class="diagram-block">
               <DiagramComp
-                v-if="items.length !== 0"
+                v-show="items.length !== 0"
                />
             </div>
           </v-col>

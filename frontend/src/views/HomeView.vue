@@ -42,9 +42,13 @@
 
             >Проверить
             </v-btn>
+            <div class="diagram-block">
+              <DiagramComp
+                v-if="items.length !== 0"
+               />
+            </div>
           </v-col>
           <v-col>
-          <DiagramComp />
             <v-expansion-panels focusable>
               <v-expansion-panel
                 v-for="(item, index) in isFound" :key="index"
@@ -258,5 +262,9 @@ export default {
   .rating {
     text-align: end;
     margin-right: 30px;
+  }
+
+  .diagram-block {
+    margin-top: 60px;
   }
 </style>

@@ -175,7 +175,7 @@ export default {
       this.result = {};
       this.isFound = [];
       this.notFound = [];
-      const regExp = /,|\(/;
+      const regExp = /,|\(|—/;
       
       this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
 

@@ -14,10 +14,12 @@ export default {
     DiagramChart,
   },
 
-  data: ({
+  data() {
+    return {
       intervalId: null,
       points: [],
-  }),
+    }
+  },
 
   methods: {
     updateDiagram() {

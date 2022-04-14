@@ -13,6 +13,14 @@
           <h2>Analyse <span class="red--text">Food</span> Components</h2>
         </v-app-bar-title>
         <v-spacer></v-spacer>
+          <v-btn 
+          class="d-flex align-self-center mr-6"
+          color="error"
+          to="#"
+          >
+          Связаться с нами
+        </v-btn>
+        
         <v-btn 
           class="d-flex align-self-center"
           color="error"
@@ -227,6 +235,8 @@ export default {
     }
   }
 }
+
+
 </script>
 <style>
   .text {

@@ -35,7 +35,7 @@
                 </template>
                 <span class="item-tooltip">Поиск в интернете информации о добавке - {{item.name}}</span>
               </v-tooltip>
-              <ContactForm/>
+              
             </template>
           </v-list-item>
           <v-divider
@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import ContactForm from "@/components/ContactForm";
+
 export default {
-  components: {ContactForm},
+  
   props:['notFound', 'items'],
   name: "NotFoundPanel",
   data(){

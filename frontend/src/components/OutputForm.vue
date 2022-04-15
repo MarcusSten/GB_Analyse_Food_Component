@@ -81,10 +81,10 @@
           </template>
           <span class="item-title">Ссылка на Wiki с информацией о добавке - {{cardData.name}}</span>
         </v-tooltip>
-        <div>
+      </div>
+        <div class="contactForm">
           <ContactForm/>
         </div>
-      </div>
     </div>
 </template>
 
@@ -103,9 +103,15 @@ export default {
 </script>
 
 <style scoped>
+.contactForm{
+  position: absolute;
+  right: 0px;
+  bottom: 8px;
+} 
   .items-wrapper {
     text-align: left;
     margin-top: 10px;
+    position: relative;
   }
 
   .item-block {

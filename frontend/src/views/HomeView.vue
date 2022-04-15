@@ -13,8 +13,9 @@
           <h2>Analyse <span class="red--text">Food</span> Components</h2>
         </v-app-bar-title>
         <v-spacer></v-spacer>
+        <div class="contactForm">
           <ContactForm/>
-        <v-spacer></v-spacer>
+        </div>
         <v-btn
           class="d-flex align-self-center"
           color="error"
@@ -186,6 +187,11 @@ export default {
 
 </script>
 <style>
+
+  .contactForm{
+    padding-top: 18px;
+    margin-right: 25px;
+  }
   .text {
     color: black;
     text-align: left;

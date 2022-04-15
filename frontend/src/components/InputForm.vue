@@ -29,7 +29,6 @@ export default {
   },
   methods:{
     returnEnteredText:function (){
-      // this.$emit('changeEnteredText', this.enteredText )
       this.$emit('changeEnteredText', this.enteredText )
     }
   }

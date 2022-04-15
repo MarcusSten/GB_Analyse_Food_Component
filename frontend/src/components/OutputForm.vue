@@ -81,13 +81,18 @@
           </template>
           <span class="item-title">Ссылка на Wiki с информацией о добавке - {{cardData.name}}</span>
         </v-tooltip>
+        <div>
+          <ContactForm/>
+        </div>
       </div>
     </div>
 </template>
 
 <script>
+import ContactForm from "@/components/ContactForm";
 export default {
   name: "OutputForm",
+  components: {ContactForm},
   props: ["cardData"],
   data(){
     return{

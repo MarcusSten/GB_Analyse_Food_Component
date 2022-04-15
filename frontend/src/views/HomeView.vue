@@ -29,7 +29,6 @@
       <v-container>
         <v-row>
           <v-col cols="30" sm="6">
-
               <InputForm
                   title="Анализ компонентов"
                   v-on:changeEnteredText="check($event)"

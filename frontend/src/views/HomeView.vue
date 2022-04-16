@@ -57,7 +57,7 @@
             </div>
             <v-expansion-panels focusable>
               <v-expansion-panel
-                v-for="(item, index) in isFound" :key="index"
+                v-for="(item, index) in filterFound" :key="index"
               >
                 <v-expansion-panel-header
                     v-if="item.description !== 'Not Found' && nameFormat(item.name, item.searchName)" class="item-title">
@@ -107,7 +107,7 @@
           </v-toolbar>
           <v-list two-line>
             <v-list-item-group>
-              <template v-for="(item, index) in items">
+              <template v-for="(item, index) in filterNotFound">
                 <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found' && nameFormat(item.name)" class="item-title">
                   <template>
                     <v-list-item-content>
@@ -174,7 +174,17 @@ export default {
   components: {
     OutputForm,
     DiagramComp
-    // HelloWorld
+  },
+  computed: {
+    filterFound(){
+      return this.withOutDuplicates(this.isFound)
+    },
+
+    filterNotFound() {
+      return this.withOutDuplicates(this.items)
+    },
+
+
   },
   methods: {
     check() {
@@ -191,9 +201,30 @@ export default {
         this.items.push(this.result)
       })
     },
-    
+
     genColor (i) {
       return this.colors[i]
+    },
+
+    withOutDuplicates(arr){
+      return arr.reduce((o, i) => {
+        if (!o.find(v => v.name === i.name)) {
+          o.push(i);
+        }
+        return o;
+      }, [])
+    },
+
+    searchFormat(string){
+      let res = ''
+
+      if(string[0].toUpperCase() === 'Е') {
+        res = 'E' + string.slice(1)
+      } else {
+        res = string
+      }
+
+      return res.replace(/[ -()]/g, "")
     },
 
     nameFormat(name, searchName){
@@ -201,14 +232,10 @@ export default {
 
       if(searchName){
 
-        const translateLetterE =  searchName[0] === 'Е' ? 'E' + searchName.slice(1) : searchName
-
-        const search = translateLetterE.split(' ').join('')
-
-        if(search.toUpperCase() === name.toUpperCase()) {
-          str = search.toString()
+        if(this.searchFormat(searchName).toUpperCase() === name.toUpperCase()) {
+          str = searchName.toString()
         } else {
-          str = `${ search + ' (' + name + ')'}`
+          str = `${ searchName + ' (' + name + ')'}`
         }
 
       } else if (name && name.length > 2) {
@@ -217,20 +244,23 @@ export default {
         str = ''
       }
 
-
-      return str ? str[0].toUpperCase() + str.slice(1) : '';
+      return str;
     },
 
     async get_description(additiveName) {
-      // eslint-disable-next-line
-      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[.,-\/#!$%^&*;:{}=\-_`~()@+?><\[\]]/g, ''));
-      if (response.ok) {
-        let json = await response.json();
-        this.result = json
-        this.isFound.push({ searchName: additiveName, ...this.result })
-      } else {
-        this.result = {"name": additiveName, "description": "Not Found"}
-        this.notFound.push(this.result)
+
+      if (additiveName && additiveName.length){
+        try {
+          let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
+          this.result = await response.json()
+            this.isFound.push({
+              searchName: additiveName[0].toUpperCase() + additiveName.slice(1),
+              ...this.result
+            })
+        } catch (e){
+          this.result = {"name": additiveName, "description": "Not Found"}
+          this.notFound.push(this.result)
+        }
       }
     }
   }

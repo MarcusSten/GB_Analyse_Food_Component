@@ -19,7 +19,6 @@ export default {
   watch: {
     items: function (newVal) {
       this.updateDiagram(newVal);
-      console.log(newVal)
     }
   },
 
@@ -32,7 +31,6 @@ export default {
 
   methods: {
     updateDiagram(items) {
-      console.log("Update");
 
       let result = [];
       

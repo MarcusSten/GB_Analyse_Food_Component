@@ -6,7 +6,8 @@
 export default {
   props: ["data", "title"],
 
-  data: ({
+  data() {
+    return {
       chartOptions: {
         chart: {
           plotBackgroundColor: null,
@@ -44,7 +45,8 @@ export default {
       },
       updateArgs: [true, true, { duration: 1000 }],
       types: [],
-  }),
+    }
+  },
   
   watch: {
     data() {

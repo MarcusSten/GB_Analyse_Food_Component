@@ -44,7 +44,12 @@
             </v-btn>
           </v-col>
           <v-col>
-          <DiagramComp />
+          <div class="diagram-block">
+              <DiagramComp
+                :items="items"
+                v-show="items.length !== 0"
+               />
+            </div>
             <v-expansion-panels focusable>
               <v-expansion-panel
                 v-for="(item, index) in isFound" :key="index"
@@ -179,14 +184,8 @@ export default {
         await this.get_description(element);
         this.items.push(this.result)
       })
-
-      console.log(this.isFound, 'this.isFound')
-
-      // this.get_description(this.separatedList[0])
-      // console.log(typeof this.result)
-      // console.log(this.result)
-
     },
+    
     genColor (i) {
       return this.colors[i]
     },

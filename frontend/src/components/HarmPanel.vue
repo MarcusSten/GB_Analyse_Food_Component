@@ -41,11 +41,6 @@ import OutputForm from "@/components/OutputForm";
 export default {
   name: "HarmPanel",
   props: ['isFound'],
-  data(){
-    return{
-
-    }
-  },
   components:[OutputForm]
 }
 </script>

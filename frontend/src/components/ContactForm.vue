@@ -64,12 +64,14 @@
                 <v-col
                  cols="12"
                   >
-                  <v-text-field
-                 
-                    auto-grow
-                    rows="8"
-                    label="Ваше предложение"
-                  ></v-text-field>
+                  <v-textarea
+                      outlined
+                      auto-grow
+                      rows="8"
+                      label="Ваше предложение"
+                      hint = "Изложите ваши предложения"
+                      v-model="textToAdd"
+                  ></v-textarea>
                </v-col>
             </v-row>
           </v-container>
@@ -98,8 +100,21 @@
 </template>
 <script>
 export default {
+  props:['cardData'],
   data: () => ({
     dialog: false,
+    textToAdd: "",
   }),
+  mounted() {
+    if (this.cardData) {
+      // console.log("Mounted", this.cardData)
+      this.textToAdd += this.cardData.name;
+      this.textToAdd += ", \n";
+      this.textToAdd += this.cardData.description;
+      this.textToAdd += "\n\nПожалуйста, введите ваш текст далее:\n";
+      this.textToAdd = this.textToAdd.toString();
+    }
+
+  }
 }
 </script>

@@ -83,7 +83,7 @@
         </v-tooltip>
       </div>
         <div class="contactForm">
-          <ContactForm/>
+          <ContactForm :card-data="cardData"/>
         </div>
     </div>
 </template>

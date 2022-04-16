@@ -42,6 +42,11 @@
 
             >Проверить
             </v-btn>
+            <div class="diagram-block">
+              <DiagramComp
+                v-show="items.length !== 0"
+               />
+            </div>
           </v-col>
           <v-col>
           <div class="diagram-block">
@@ -54,7 +59,8 @@
               <v-expansion-panel
                 v-for="(item, index) in isFound" :key="index"
               >
-                <v-expansion-panel-header v-if="item.description !== 'Not Found'" class="item-title">
+                <v-expansion-panel-header
+                    v-if="item.description !== 'Not Found' && nameFormat(item.name, item.searchName)" class="item-title">
                   {{ nameFormat(item.name, item.searchName) }}
                   <v-tooltip bottom color="white">
                     <template v-slot:activator="{ on, attrs }">
@@ -102,7 +108,7 @@
           <v-list two-line>
             <v-list-item-group>
               <template v-for="(item, index) in items">
-                <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found'" class="item-title">
+                <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found' && nameFormat(item.name)" class="item-title">
                   <template>
                     <v-list-item-content>
                       <v-list-item-title class="text-left" v-text="nameFormat(item.name)"></v-list-item-title>
@@ -176,7 +182,7 @@ export default {
       this.result = {};
       this.isFound = [];
       this.notFound = [];
-      const regExp = /,|\(/;
+      const regExp = /[,()—.]/;
       
       this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
 
@@ -195,28 +201,35 @@ export default {
 
       if(searchName){
 
-        if(searchName.toUpperCase() === name.toUpperCase()) {
-          str = searchName.toString()
+        const translateLetterE =  searchName[0] === 'Е' ? 'E' + searchName.slice(1) : searchName
+
+        const search = translateLetterE.split(' ').join('')
+
+        if(search.toUpperCase() === name.toUpperCase()) {
+          str = search.toString()
         } else {
-          str = `${ searchName + ' (' + name + ')'}`
+          str = `${ search + ' (' + name + ')'}`
         }
 
-      } else {
+      } else if (name && name.length > 2) {
         str = name
+      } else {
+        str = ''
       }
 
-      return str[0].toUpperCase() + str.slice(1);
+
+      return str ? str[0].toUpperCase() + str.slice(1) : '';
     },
 
     async get_description(additiveName) {
       // eslint-disable-next-line
-      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\)\+]/g, ''));
+      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[.,-\/#!$%^&*;:{}=\-_`~()@+?><\[\]]/g, ''));
       if (response.ok) {
         let json = await response.json();
         this.result = json
-        this.isFound.push({ searchName: additiveName.replace(/\)/g, ''), ...this.result })
+        this.isFound.push({ searchName: additiveName, ...this.result })
       } else {
-        this.result = {"name": additiveName.replace(/\)/g, ''), "description": "Not Found"}
+        this.result = {"name": additiveName, "description": "Not Found"}
         this.notFound.push(this.result)
       }
     }
@@ -243,7 +256,7 @@ export default {
     text-decoration:none;
   }
 
-  .v-list-item__title .text-left {
+  .text-left {
     padding-right: 60px;
   }
 
@@ -257,5 +270,9 @@ export default {
   .rating {
     text-align: end;
     margin-right: 30px;
+  }
+
+  .diagram-block {
+    margin-top: 60px;
   }
 </style>

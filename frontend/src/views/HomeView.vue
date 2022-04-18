@@ -13,6 +13,9 @@
           <h2>Analyse <span class="red--text">Food</span> Components</h2>
         </v-app-bar-title>
         <v-spacer></v-spacer>
+        <div class="contactForm">
+          <ContactForm/>
+        </div>
         <v-btn 
           class="d-flex align-self-center"
           color="error"
@@ -22,26 +25,15 @@
         </v-btn>
       </v-col>
     </v-app-bar>
+
     <v-main>
       <v-container>
         <v-row>
           <v-col cols="30" sm="6">
-            <div class="text"><h2>Анализ состава</h2></div>
-            <v-textarea
-                outlined
-                auto-grow
-                rows="8"
-                label="Введите список ингредиентов, разделенных запятой"
-                v-model="enteredText"
-            ></v-textarea>
-            <v-btn class="check-btn"
-                   color="error"
-                   elevation="3"
-                   x-large
-                   v-on:click="check"
-
-            >Проверить
-            </v-btn>
+            <InputForm
+                title="Анализ компонентов"
+                v-on:changeEnteredText="check($event)"
+            />
             <div class="diagram-block">
               <DiagramComp
                 v-show="items.length !== 0"
@@ -96,52 +88,10 @@
           <v-col cols="30" sm="6">
           </v-col>
           <v-col>
-        <v-card v-if="notFound.length !== 0"
-        >
-          <v-toolbar
-            color="error"
-            dark
-          >
-            <v-toolbar-title>Не найдено</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-          <v-list two-line>
-            <v-list-item-group>
-              <template v-for="(item, index) in filterNotFound">
-                <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found' && nameFormat(item.name)" class="item-title">
-                  <template>
-                    <v-list-item-content>
-                      <v-list-item-title class="text-left" v-text="nameFormat(item.name)"></v-list-item-title>
-                    </v-list-item-content>
-                    <v-tooltip bottom color="white">
-                      <template v-slot:activator="{ on, attrs }">
-                        <span
-                          v-bind="attrs"
-                          v-on="on"
-                        >
-                          <a v-bind:href="`https://yandex.ru/search/?text=` + item.name"
-                            target="_blank"
-                            class="link-not-found"
-                            icon
-                            >
-                            <v-icon color="grey lighten-1">
-                              mdi-open-in-new
-                            </v-icon>
-                          </a>
-                        </span>
-                      </template>
-                      <span class="item-tooltip">Поиск в интернете информации о добавке - {{item.name}}</span>
-                    </v-tooltip>
-                  </template>
-                </v-list-item>
-                <v-divider
-                  v-if="index < items.length - 1"
-                  :key="index"
-                ></v-divider>
-              </template>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
+            <NotFoundPanel
+                v-bind:not-found = "filterNotFound"
+                v-bind:items = "items"
+            />
         </v-col>
         </v-row>
       </v-container>
@@ -156,7 +106,10 @@
 
 <script>
 import OutputForm from "@/components/OutputForm";
-import DiagramComp from "../components/DiagramComp.vue";
+import DiagramComp from "@/components/DiagramComp";
+import InputForm from "@/components/InputForm";
+import NotFoundPanel from "@/components/NotFoundPanel";
+import ContactForm from "@/components/ContactForm";
 
 export default {
   name: 'HomeView',
@@ -173,7 +126,10 @@ export default {
   },
   components: {
     OutputForm,
-    DiagramComp
+    DiagramComp,
+    InputForm,
+    ContactForm,
+    NotFoundPanel,
   },
   computed: {
     filterFound(){
@@ -187,7 +143,8 @@ export default {
 
   },
   methods: {
-    check() {
+    check(updatedText) {
+      this.enteredText = updatedText;
       this.items = [];
       this.result = {};
       this.isFound = [];
@@ -267,6 +224,10 @@ export default {
 }
 </script>
 <style>
+  .contactForm{
+    padding-top: 18px;
+    margin-right: 25px;
+  }
   .text {
     color: black;
     text-align: left;

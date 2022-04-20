@@ -14,6 +14,14 @@ export default {
     DiagramChart,
   },
 
+  props: ['items'],
+
+  watch: {
+    items: function (newVal) {
+      this.updateDiagram(newVal);
+    }
+  },
+
   data() {
     return {
       intervalId: null,
@@ -22,14 +30,21 @@ export default {
   },
 
   methods: {
-    updateDiagram() {
-      console.log("Update");
+    updateDiagram(items) {
+
+      let result = [];
+      
+      items.map((elem) => {
+        result.push({name: elem.name, y: elem.harmNum})
+      })
+
+      this.points = result;
     },
   },
 
   mounted() {
-    this.$root.$on("updateDiagram", () => {
-      this.updateDiagram();
+    this.$root.$on("updateDiagram", (items) => {
+      this.updateDiagram(items);
     });
   },
 };

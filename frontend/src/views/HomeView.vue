@@ -41,11 +41,18 @@
             </div>
           </v-col>
           <v-col>
+          <div class="diagram-block">
+              <DiagramComp
+                :items="items"
+                v-show="items.length !== 0"
+               />
+            </div>
             <v-expansion-panels focusable>
               <v-expansion-panel
-                v-for="(item, index) in isFound" :key="index"
+                v-for="(item, index) in filterFound" :key="index"
               >
-                <v-expansion-panel-header v-if="item.description !== 'Not Found'" class="item-title">
+                <v-expansion-panel-header
+                    v-if="item.description !== 'Not Found' && nameFormat(item.name, item.searchName)" class="item-title">
                   {{ nameFormat(item.name, item.searchName) }}
                   <v-tooltip bottom color="white">
                     <template v-slot:activator="{ on, attrs }">
@@ -82,8 +89,8 @@
           </v-col>
           <v-col>
             <NotFoundPanel
-              v-bind:not-found = "notFound"
-              v-bind:items = "items"
+                v-bind:not-found = "filterNotFound"
+                v-bind:items = "items"
             />
         </v-col>
         </v-row>
@@ -122,7 +129,17 @@ export default {
     OutputForm,
     DiagramComp,
     InputForm,
-    ContactForm
+    ContactForm,
+    NotFoundPanel,
+  },
+  computed: {
+    filterFound(){
+      return this.withOutDuplicates(this.isFound)
+    },
+
+    filterNotFound() {
+      return this.withOutDuplicates(this.items)
+    },
   },
   methods: {
     check(updatedText) {
@@ -131,24 +148,38 @@ export default {
       this.result = {};
       this.isFound = [];
       this.notFound = [];
-      const regExp = /,|\(|—/;
-
+      const regExp = /[,()—.]/;
       this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
 
       this.separatedList.map(async (element) => {
         await this.get_description(element);
         this.items.push(this.result)
       })
-
-      console.log(this.isFound, 'this.isFound')
-
-      // this.get_description(this.separatedList[0])
-      // console.log(typeof this.result)
-      // console.log(this.result)
-
     },
+
     genColor (i) {
       return this.colors[i]
+    },
+
+    withOutDuplicates(arr){
+      return arr.reduce((o, i) => {
+        if (!o.find(v => v.name === i.name)) {
+          o.push(i);
+        }
+        return o;
+      }, [])
+    },
+
+    searchFormat(string){
+      let res = ''
+
+      if(string[0].toUpperCase() === 'Е') {
+        res = 'E' + string.slice(1)
+      } else {
+        res = string
+      }
+
+      return res.replace(/[ -()]/g, "")
     },
 
     nameFormat(name, searchName){
@@ -156,29 +187,35 @@ export default {
 
       if(searchName){
 
-        if(searchName.toUpperCase() === name.toUpperCase()) {
+        if(this.searchFormat(searchName).toUpperCase() === name.toUpperCase()) {
           str = searchName.toString()
         } else {
           str = `${ searchName + ' (' + name + ')'}`
         }
 
-      } else {
+      } else if (name && name.length > 2) {
         str = name
+      } else {
+        str = ''
       }
 
-      return str[0].toUpperCase() + str.slice(1);
+      return str;
     },
 
     async get_description(additiveName) {
-      // eslint-disable-next-line
-      let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\)\+]/g, ''));
-      if (response.ok) {
-        let json = await response.json();
-        this.result = json
-        this.isFound.push({ searchName: additiveName.replace(/\)/g, ''), ...this.result })
-      } else {
-        this.result = {"name": additiveName.replace(/\)/g, ''), "description": "Not Found"}
-        this.notFound.push(this.result)
+
+      if (additiveName && additiveName.length){
+        try {
+          let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
+          this.result = await response.json()
+            this.isFound.push({
+              searchName: additiveName[0].toUpperCase() + additiveName.slice(1),
+              ...this.result
+            })
+        } catch (e){
+          this.result = {"name": additiveName, "description": "Not Found"}
+          this.notFound.push(this.result)
+        }
       }
     }
   }
@@ -187,7 +224,6 @@ export default {
 
 </script>
 <style>
-
   .contactForm{
     padding-top: 18px;
     margin-right: 25px;
@@ -211,7 +247,7 @@ export default {
     text-decoration:none;
   }
 
-  .v-list-item__title .text-left {
+  .text-left {
     padding-right: 60px;
   }
 

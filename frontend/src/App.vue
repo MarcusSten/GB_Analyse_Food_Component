@@ -2,7 +2,7 @@
   <div id="app">
     <nav>
       <router-link to="/">На главную</router-link> |
-      <router-link to="/about">О Проекте</router-link>
+      <router-link to="/about">О Проекте</router-link> |
     </nav>
     <router-view/>
   </div>

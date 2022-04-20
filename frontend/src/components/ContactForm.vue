@@ -2,7 +2,6 @@
   <v-row justify="left">
     <v-dialog
         v-model="dialog"
-        persistent
         max-width="600px"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -32,28 +31,6 @@
                     required
                 ></v-text-field>
               </v-col>
-              <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"
-              >
-                <v-text-field
-                    label="Отчество"
-                    hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"
-              >
-                <v-text-field
-                    label="Фамилия*"
-                    hint="example of persistent helper text"
-                    persistent-hint
-                    required
-                ></v-text-field>
-              </v-col>
               <v-col cols="12">
                 <v-text-field
                     label="Email*"
@@ -80,14 +57,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-              color="blue darken-1"
+              color="error"
               text
               @click="dialog = false"
           >
             Close
           </v-btn>
           <v-btn
-              color="blue darken-1"
+              color="green"
               text
               @click="dialog = false"
           >
@@ -109,9 +86,7 @@ export default {
     if (this.cardData) {
       // console.log("Mounted", this.cardData)
       this.textToAdd += this.cardData.name;
-      this.textToAdd += ", \n";
-      this.textToAdd += this.cardData.description;
-      this.textToAdd += "\n\nПожалуйста, введите ваш текст далее:\n";
+      this.textToAdd += "\nПожалуйста, введите ваш текст далее:\n";
       this.textToAdd = this.textToAdd.toString();
     }
 

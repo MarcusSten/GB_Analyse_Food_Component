@@ -16,7 +16,7 @@
         <div class="contactForm">
           <ContactForm/>
         </div>
-        <v-btn 
+        <v-btn
           class="d-flex align-self-center"
           color="error"
           to="/about"
@@ -30,10 +30,10 @@
       <v-container>
         <v-row>
           <v-col cols="30" sm="6">
-            <InputForm
-                title="Анализ компонентов"
-                v-on:changeEnteredText="check($event)"
-            />
+              <InputForm
+                  title="Анализ компонентов"
+                  v-on:changeEnteredText="check($event)"
+              />
             <div class="diagram-block">
               <DiagramComp
                 v-show="items.length !== 0"
@@ -125,6 +125,7 @@ export default {
     }
   },
   components: {
+    NotFoundPanel,
     OutputForm,
     DiagramComp,
     InputForm,
@@ -139,8 +140,6 @@ export default {
     filterNotFound() {
       return this.withOutDuplicates(this.items)
     },
-
-
   },
   methods: {
     check(updatedText) {
@@ -150,7 +149,6 @@ export default {
       this.isFound = [];
       this.notFound = [];
       const regExp = /[,()—.]/;
-      
       this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
 
       this.separatedList.map(async (element) => {
@@ -222,6 +220,8 @@ export default {
     }
   }
 }
+
+
 </script>
 <style>
   .contactForm{

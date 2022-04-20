@@ -1,14 +1,13 @@
 <template>
-  <v-card v-if="notFound.length !== 0"
-  >
-    <v-toolbar
+  <v-expansion-panels>
+    <v-expansion-panel>
+      <v-expansion-panel-header
         color="error"
-        dark
-    >
-      <v-toolbar-title>Не найдено</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-    <v-list two-line>
+        class="white--text not-found-title">
+        Не найдено
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
+        <v-list two-line>
       <v-list-item-group>
         <template v-for="(item, index) in items">
           <v-list-item :key="index + 'notFound'" v-if="item.description === 'Not Found'" class="item-title">
@@ -45,7 +44,9 @@
         </template>
       </v-list-item-group>
     </v-list>
-  </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
 
 <script>
@@ -81,5 +82,15 @@ export default {
 </script>
 
 <style scoped>
-
+  .not-found-title {
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.0892857143em;
+    outline: 0;
+    text-indent: 0.0892857143em;
+    text-transform: uppercase;
+    transition-duration: 0.28s;
+    transition-property: box-shadow, transform, opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 </style>

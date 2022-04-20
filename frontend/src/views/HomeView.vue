@@ -35,18 +35,13 @@
                   v-on:changeEnteredText="check($event)"
               />
             <div class="diagram-block">
-              <DiagramComp
-                v-show="items.length !== 0"
-               />
+            <DiagramComp
+              :items="items"
+              v-show="items.length !== 0"
+              />
             </div>
           </v-col>
           <v-col>
-          <div class="diagram-block">
-              <DiagramComp
-                :items="items"
-                v-show="items.length !== 0"
-               />
-            </div>
             <v-expansion-panels focusable>
               <v-expansion-panel
                 v-for="(item, index) in filterFound" :key="index"
@@ -72,7 +67,12 @@
                         </v-rating>
                       </span>
                     </template>
-                    <span class="item-title">Вред добавки - {{item.name}}</span>
+                    <span class="item-title">Вред добавки - {{item.name}}, где <v-icon
+                              color="deep-orange darken-4"
+                              medium>mdi-cards-heart</v-icon> - очень вредно, а <v-icon
+                              color="light-green accent-3"
+                              medium>mdi-cards-heart</v-icon> безвредно</span>
+                            
                   </v-tooltip>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -80,20 +80,17 @@
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-container>
-        <v-row>
-          <v-col cols="30" sm="6">
-          </v-col>
-          <v-col>
-            <NotFoundPanel
+
+            <div class="not-found-block">
+              <NotFoundPanel
+                v-if="notFound.length !== 0"
                 v-bind:not-found = "filterNotFound"
                 v-bind:items = "items"
-            />
-        </v-col>
+              />
+            </div>
+          </v-col>
         </v-row>
+
       </v-container>
     </v-main>
     <v-footer color="grey">
@@ -130,7 +127,6 @@ export default {
     DiagramComp,
     InputForm,
     ContactForm,
-    NotFoundPanel,
   },
   computed: {
     filterFound(){
@@ -265,5 +261,9 @@ export default {
 
   .diagram-block {
     margin-top: 60px;
+  }
+
+  .not-found-block {
+    margin-top: 30px;
   }
 </style>

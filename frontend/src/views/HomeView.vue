@@ -34,19 +34,18 @@
                   title="Анализ компонентов"
                   v-on:changeEnteredText="check($event)"
               />
-            <div class="diagram-block">
-              <DiagramComp
-                v-show="items.length !== 0"
-               />
+            <div class="result-block">
+
+            <div v-show="items.length !== 0" class="result-item">
+              Найдено компонентов: {{ isFound.length }}
+            </div>
+            <DiagramComp
+              :items="items"
+              v-show="items.length !== 0"
+              />
             </div>
           </v-col>
           <v-col>
-          <div class="diagram-block">
-              <DiagramComp
-                :items="items"
-                v-show="items.length !== 0"
-               />
-            </div>
             <v-expansion-panels focusable>
               <v-expansion-panel
                 v-for="(item, index) in filterFound" :key="index"
@@ -72,7 +71,12 @@
                         </v-rating>
                       </span>
                     </template>
-                    <span class="item-title">Вред добавки - {{item.name}}</span>
+                    <span class="item-title">Вред добавки - {{item.name}}, где <v-icon
+                              color="deep-orange darken-4"
+                              medium>mdi-cards-heart</v-icon> - очень вредно, а <v-icon
+                              color="light-green accent-3"
+                              medium>mdi-cards-heart</v-icon> безвредно</span>
+                            
                   </v-tooltip>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -80,20 +84,17 @@
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-container>
-        <v-row>
-          <v-col cols="30" sm="6">
-          </v-col>
-          <v-col>
-            <NotFoundPanel
+
+            <div class="not-found-block">
+              <NotFoundPanel
+                v-if="notFound.length !== 0"
                 v-bind:not-found = "filterNotFound"
                 v-bind:items = "items"
-            />
-        </v-col>
+              />
+            </div>
+          </v-col>
         </v-row>
+
       </v-container>
     </v-main>
     <v-footer color="grey">
@@ -130,7 +131,6 @@ export default {
     DiagramComp,
     InputForm,
     ContactForm,
-    NotFoundPanel,
   },
   computed: {
     filterFound(){
@@ -203,17 +203,20 @@ export default {
     },
 
     async get_description(additiveName) {
+      let badPhrase = '';
+      badPhrase = additiveName.split('регулятор кислотности ').join('');
+      badPhrase = additiveName.split('эмульгаторы ').join('');
 
       if (additiveName && additiveName.length){
         try {
-          let response = await fetch("http://localhost:3001/names/" + additiveName.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
+          let response = await fetch("http://localhost:3001/names/" + badPhrase.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
           this.result = await response.json()
             this.isFound.push({
-              searchName: additiveName[0].toUpperCase() + additiveName.slice(1),
+              searchName: badPhrase[0].toUpperCase() + badPhrase.slice(1),
               ...this.result
             })
         } catch (e){
-          this.result = {"name": additiveName, "description": "Not Found"}
+          this.result = {"name": badPhrase, "description": "Not Found"}
           this.notFound.push(this.result)
         }
       }
@@ -263,7 +266,29 @@ export default {
     margin-right: 30px;
   }
 
-  .diagram-block {
-    margin-top: 60px;
+  .result-block {
+    margin-top: 100px;
+  }
+
+  .not-found-block {
+    margin-top: 30px;
+  }
+
+  .result-item {
+    margin: 0 auto;
+    height: 52px;
+    width: 300px;
+    padding: 14px 23px;
+    text-align: center;
+    color: white;
+    background-color: #ff5252 !important;
+    border-color: #ff5252 !important;
+    box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%) !important;
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.0892857143em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-bottom: 30px;
   }
 </style>

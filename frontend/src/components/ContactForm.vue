@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="left">
+  <v-row>
     <v-dialog
         v-model="dialog"
         max-width="600px"
@@ -61,14 +61,14 @@
               text
               @click="dialog = false"
           >
-            Close
+            Отменить
           </v-btn>
           <v-btn
               color="green"
               text
               @click="dialog = false"
           >
-            Save
+            Отправить
           </v-btn>
         </v-card-actions>
       </v-card>

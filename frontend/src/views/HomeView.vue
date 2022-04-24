@@ -56,6 +56,7 @@
             
               <DiagramComp
                 :items="items"
+                :notFound="notFound.length"
                 v-show="items.length !== 0"
                 />
             </div>

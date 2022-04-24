@@ -4,7 +4,7 @@
       <v-expansion-panel-header
         color="error"
         class="white--text not-found-title">
-        Не найдено
+        Неизвестные компоненты
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-list two-line>

@@ -35,14 +35,29 @@
                   v-on:changeEnteredText="check($event)"
               />
             <div class="result-block">
-
-            <div v-show="items.length !== 0" class="result-item">
-              Найдено компонентов: {{ isFound.length }}
-            </div>
-            <DiagramComp
-              :items="items"
-              v-show="items.length !== 0"
-              />
+              <div class="result-information">
+                <div v-show="items.length !== 0" class="result-item">
+                  <v-badge
+                    color="green"
+                    :content="filterFound.length"
+                  >
+                    Найдено компонентов
+                  </v-badge>
+                </div>
+                <div v-show="items.length !== 0" class="result-item">
+                  <v-badge
+                    color="green"
+                    :content="filterNotFound.length"
+                  >
+                    Неизвестные компоненты:
+                  </v-badge>
+                </div>
+              </div>
+            
+              <DiagramComp
+                :items="items"
+                v-show="items.length !== 0"
+                />
             </div>
           </v-col>
           <v-col>
@@ -71,16 +86,11 @@
                         </v-rating>
                       </span>
                     </template>
-                    <span class="item-title">Вред добавки - {{item.name}}, где <v-icon
-                              color="deep-orange darken-4"
-                              medium>mdi-cards-heart</v-icon> - очень вредно, а <v-icon
-                              color="light-green accent-3"
-                              medium>mdi-cards-heart</v-icon> безвредно</span>
-                            
+                    <span class="item-title">Вред добавки - {{item.name}}</span>  
                   </v-tooltip>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  <output-form :card-data="item" :key="index" class=""></output-form>
+                  <output-form :card-data="item" :key="index"></output-form>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -203,20 +213,30 @@ export default {
     },
 
     async get_description(additiveName) {
-      let badPhrase = '';
-      badPhrase = additiveName.split('регулятор кислотности ').join('');
-      badPhrase = additiveName.split('эмульгаторы ').join('');
+      
+      let phrase = '';
+      let badphrases = ['регулятор кислотности ', 'эмульгаторы '];
 
       if (additiveName && additiveName.length){
+
+        for (let i = 0; i <= badphrases.length; i++) {
+          if(additiveName.includes(badphrases[i]) == true) {
+            phrase = additiveName.replace(badphrases[i], '');
+            break;
+          } else {
+            phrase = additiveName;
+          }
+        }
+
         try {
-          let response = await fetch("http://localhost:3001/names/" + badPhrase.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
+          let response = await fetch("http://localhost:3001/names/" + phrase.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
           this.result = await response.json()
             this.isFound.push({
-              searchName: badPhrase[0].toUpperCase() + badPhrase.slice(1),
+              searchName: phrase[0].toUpperCase() + phrase.slice(1),
               ...this.result
             })
         } catch (e){
-          this.result = {"name": badPhrase, "description": "Not Found"}
+          this.result = {"name": phrase, "description": "Not Found"}
           this.notFound.push(this.result)
         }
       }
@@ -274,11 +294,15 @@ export default {
     margin-top: 30px;
   }
 
+  .result-information {
+    display: flex;
+    justify-content: space-around;
+  }
+
   .result-item {
     margin: 0 auto;
-    height: 52px;
-    width: 300px;
-    padding: 14px 23px;
+    width: 270px;
+    padding: 8px 0;
     text-align: center;
     color: white;
     background-color: #ff5252 !important;
@@ -288,7 +312,9 @@ export default {
     font-weight: 500;
     letter-spacing: 0.0892857143em;
     text-transform: uppercase;
-    white-space: nowrap;
     margin-bottom: 30px;
+    font-size: 12px;
   }
+
+
 </style>

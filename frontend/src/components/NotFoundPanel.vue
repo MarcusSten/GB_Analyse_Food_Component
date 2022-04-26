@@ -1,5 +1,6 @@
 <template>
-  <v-expansion-panels>
+  <div class="not-found-block">
+    <v-expansion-panels>
     <v-expansion-panel>
       <v-expansion-panel-header
         color="error"
@@ -47,6 +48,7 @@
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
+  </div>
 </template>
 
 <script>
@@ -92,5 +94,8 @@ export default {
     transition-duration: 0.28s;
     transition-property: box-shadow, transform, opacity;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .not-found-block {
+    margin-top: 30px;
   }
 </style>

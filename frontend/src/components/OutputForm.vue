@@ -103,29 +103,40 @@ export default {
 </script>
 
 <style scoped>
+
 .contactForm{
   position: absolute;
   right: 0px;
   bottom: 8px;
 } 
-  .items-wrapper {
+
+.items-wrapper {
     text-align: left;
     margin-top: 10px;
     position: relative;
   }
 
-  .item-block {
+.item-block {
     margin-top: 10px;
   }
 
-  .item-title {
+.item-title {
     font-weight: bold;
     color: black;
     margin-top: 10px;
     cursor: default;
   }
 
-  .link {
+.link {
     text-decoration:none;
   }
+
+.item-title {
+  font-weight: bold;
+  color: black;
+}
+
+
+
+
 </style>

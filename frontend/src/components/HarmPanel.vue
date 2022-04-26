@@ -28,7 +28,10 @@
         </v-tooltip>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <output-form :card-data="item" :key="index" class=""></output-form>
+        <OutputForm
+            :card-data="item"
+            :key="index"
+        />
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -40,11 +43,63 @@ import OutputForm from "@/components/OutputForm";
 
 export default {
   name: "HarmPanel",
+  data(){
+    return{
+      colors: ['light-green accent-3', 'lime accent-2', 'orange', 'orange darken-4', 'deep-orange darken-4'],
+    }
+  },
   props: ['isFound'],
-  components:[OutputForm]
+  components:{OutputForm},
+  methods:{
+    genColor (i) {
+      return this.colors[i]
+    },
+    searchFormat(string){
+      let res = ''
+
+      if(string[0].toUpperCase() === 'Е') {
+        res = 'E' + string.slice(1)
+      } else {
+        res = string
+      }
+
+      return res.replace(/[ -()]/g, "")
+    },
+    nameFormat(name, searchName){
+      let str = ''
+
+      if(searchName){
+
+        if(this.searchFormat(searchName).toUpperCase() === name.toUpperCase()) {
+          str = searchName.toString()
+        } else {
+          str = `${ searchName + ' (' + name + ')'}`
+        }
+
+      } else if (name && name.length > 2) {
+        str = name
+      } else {
+        str = ''
+      }
+
+      return str;
+    },
+  }
 }
 </script>
 
 <style scoped>
+
+.item-title {
+  font-weight: bold;
+  color: black;
+}
+.rating {
+  text-align: end;
+  margin-right: 30px;
+}
+
+
+
 
 </style>

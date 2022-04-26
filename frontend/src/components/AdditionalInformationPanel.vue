@@ -55,8 +55,8 @@ export default {
   padding: 8px 0;
   text-align: center;
   color: white;
-  background-color: #ff5252 !important;
-  border-color: #ff5252 !important;
+  background-color: #26A69A !important;
+  border-color: #26A69A !important;
   box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%) !important;
   border-radius: 4px;
   font-weight: 500;

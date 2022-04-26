@@ -3,7 +3,7 @@
     <v-expansion-panels>
     <v-expansion-panel>
       <v-expansion-panel-header
-        color="error"
+        color="teal lighten-1"
         class="white--text not-found-title">
         Неизвестные компоненты
       </v-expansion-panel-header>

@@ -106,7 +106,7 @@
 
 <style>
   .stack-container .flowchart-node .node-main .node-type {
-    color: #ff5252;
+    color: #26A69A;
     font-weight: bold;
     font-size: 18px;
     background-color: white;

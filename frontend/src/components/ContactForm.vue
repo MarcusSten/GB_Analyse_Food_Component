@@ -12,11 +12,11 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
             class="d-flex align-self-center right"
-            color="error"
+            color="teal lighten-1"
             v-bind="attrs"
             v-on="on"
         >
-          Связаться с нами
+          <span style="color: white;">Связаться с нами</span>
         </v-btn>
       </template>
       <v-card>

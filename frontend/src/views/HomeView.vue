@@ -5,23 +5,24 @@
       <v-col class="d-flex">
         <v-app-bar-nav-icon>
           <v-img
+             class="mt-6"
               alt="food"
-              max-width="55"
-              src="../assets/icons8-food-64.png"></v-img>
+              max-width="65"
+              src="../assets/food (2).svg"></v-img>
         </v-app-bar-nav-icon>
-        <v-app-bar-title class=" align-center pl-6 d-none d-sm-flex d-sm-none">
-          <h2>Analyse <span class="red--text">Food</span> Components</h2>
+        <v-app-bar-title class=" align-center pl-6 d-none d-sm-flex d-sm-none mt-3">
+          <h2>Analyse <span style="color: #26A69A;">Food</span> Components</h2>
         </v-app-bar-title>
         <v-spacer></v-spacer>
         <div class="contactForm">
           <ContactForm/>
         </div>
         <v-btn
-          class="d-flex align-self-center"
-          color="error"
+          class="d-flex align-self-center mt-4"
+          color="teal lighten-1"
           to="/about"
           >
-          О Проекте
+          <span style="color: white;">О Проекте</span>
         </v-btn>
       </v-col>
     </v-app-bar>
@@ -199,7 +200,7 @@ export default {
 </script>
 <style>
   .contactForm{
-    padding-top: 18px;
+    padding-top: 30px;
     margin-right: 25px;
   }
   .text {

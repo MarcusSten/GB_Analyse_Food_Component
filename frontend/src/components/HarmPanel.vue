@@ -1,5 +1,15 @@
 <template>
-<div>
+<div v-if="isFound.length">
+  <div class="v-expansion-panel-header white--text not-found-title teal lighten-1 result-item">
+    <div>
+      <v-badge
+          color="green"
+          :content="isFound.length"
+      >
+        НАЙДЕНО КОМПОНЕНТОВ
+      </v-badge>
+    </div>
+  </div>
   <v-expansion-panels focusable>
     <v-expansion-panel
         v-for="(item, index) in isFound" :key="index"
@@ -99,7 +109,17 @@ export default {
   margin-right: 30px;
 }
 
-
+.result-item {
+  margin: 0 auto;
+  color: white;
+  background-color: #26A69A !important;
+  border-color: #26A69A !important;
+  box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%) !important;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.0892857143em;
+  text-transform: uppercase;
+}
 
 
 </style>

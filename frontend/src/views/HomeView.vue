@@ -35,31 +35,11 @@
                   title="Анализ компонентов"
                   v-on:changeEnteredText="check($event)"
               />
-            <div class="result-block">
-              <div class="result-information">
-                <div v-show="items.length !== 0" class="result-item">
-                  <v-badge
-                    color="green"
-                    :content="filterFound.length"
-                  >
-                    Найдено компонентов
-                  </v-badge>
-                </div>
-                <div v-show="items.length !== 0" class="result-item">
-                  <v-badge
-                    color="green"
-                    :content="filterNotFound.length"
-                  >
-                    Неизвестные компоненты:
-                  </v-badge>
-                </div>
-              </div>
-            
-              <DiagramComp
-                :items="items"
-                :notFound="notFound.length"
-                v-show="items.length !== 0"
-                />
+            <AdditionalInformationPanel
+                  v-bind:filter-not-found = "filterNotFound"
+                  v-bind:filter-found = "filterFound"
+                  v-bind:items = "items"
+              />
           </v-col>
           <v-col>
               <HarmPanel
@@ -187,7 +167,7 @@ export default {
     async get_description(additiveName) {
       
       let phrase = '';
-      let badphrases = ['регулятор кислотности ', 'эмульгаторы '];
+      let badphrases = ['эмульгатор – ', 'регуляторы кислотности – ', 'краситель – ', 'стабилизатор – ', 'регулятор кислотности ', 'эмульгаторы ', 'разрыхлитель ', 'регуляторы кислотности ', 'эмульгатор ', 'антиокислители: ', 'краситель '];
 
       if (additiveName && additiveName.length){
 
@@ -257,7 +237,4 @@ export default {
     text-align: end;
     margin-right: 30px;
   }
-
-
-
 </style>

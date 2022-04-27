@@ -5,7 +5,16 @@
       <v-expansion-panel-header
         color="teal lighten-1"
         class="white--text not-found-title">
-        Неизвестные компоненты
+        
+          <div>
+            <v-badge
+                color="green"
+                :content="notFound.length"
+            >
+              Неизвестные компоненты
+            </v-badge>
+          </div>
+        
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-list two-line>

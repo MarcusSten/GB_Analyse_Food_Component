@@ -5,23 +5,24 @@
       <v-col class="d-flex">
         <v-app-bar-nav-icon>
           <v-img
+             class="mt-6"
               alt="food"
-              max-width="55"
-              src="../assets/icons8-food-64.png"></v-img>
+              max-width="65"
+              src="../assets/food (2).svg"></v-img>
         </v-app-bar-nav-icon>
-        <v-app-bar-title class=" align-center pl-6 d-none d-sm-flex d-sm-none">
-          <h2>Analyse <span class="red--text">Food</span> Components</h2>
+        <v-app-bar-title class=" align-center pl-6 d-none d-sm-flex d-sm-none mt-3">
+          <h2>Analyse <span style="color: #26A69A;">Food</span> Components</h2>
         </v-app-bar-title>
         <v-spacer></v-spacer>
         <div class="contactForm">
           <ContactForm/>
         </div>
         <v-btn
-          class="d-flex align-self-center"
-          color="error"
+          class="d-flex align-self-center mt-4"
+          color="teal lighten-1"
           to="/about"
           >
-          О Проекте
+          <span style="color: white;">О Проекте</span>
         </v-btn>
       </v-col>
     </v-app-bar>
@@ -59,50 +60,16 @@
                 :notFound="notFound.length"
                 v-show="items.length !== 0"
                 />
-            </div>
           </v-col>
           <v-col>
-            <v-expansion-panels focusable>
-              <v-expansion-panel
-                v-for="(item, index) in filterFound" :key="index"
-              >
-                <v-expansion-panel-header
-                    v-if="item.description !== 'Not Found' && nameFormat(item.name, item.searchName)" class="item-title">
-                  {{ nameFormat(item.name, item.searchName) }}
-                  <v-tooltip bottom color="white">
-                    <template v-slot:activator="{ on, attrs }">
-                      <span
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <v-rating v-model="item.harmNum" class="rating">
-                          <template v-slot:item="props">
-                            <v-icon
-                              :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
-                              medium
-                            >
-                              {{ props.isFilled ? 'mdi-cards-heart' : 'mdi-cards-heart-outline' }}
-                            </v-icon>
-                          </template>
-                        </v-rating>
-                      </span>
-                    </template>
-                    <span class="item-title">Вред добавки - {{item.name}}</span>  
-                  </v-tooltip>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <output-form :card-data="item" :key="index"></output-form>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-
-            <div class="not-found-block">
+              <HarmPanel
+                  v-bind:is-found = "filterFound"
+                />
               <NotFoundPanel
                 v-if="notFound.length !== 0"
                 v-bind:not-found = "filterNotFound"
                 v-bind:items = "items"
               />
-            </div>
           </v-col>
         </v-row>
 
@@ -117,11 +84,13 @@
 </template>
 
 <script>
-import OutputForm from "@/components/OutputForm";
-import DiagramComp from "@/components/DiagramComp";
+// import OutputForm from "@/components/OutputForm";
+// import DiagramComp from "@/components/DiagramComp";
 import InputForm from "@/components/InputForm";
 import NotFoundPanel from "@/components/NotFoundPanel";
 import ContactForm from "@/components/ContactForm";
+import AdditionalInformationPanel from "@/components/AdditionalInformationPanel";
+import HarmPanel from "@/components/HarmPanel";
 
 export default {
   name: 'HomeView',
@@ -137,9 +106,11 @@ export default {
     }
   },
   components: {
+    HarmPanel,
+    AdditionalInformationPanel,
     NotFoundPanel,
-    OutputForm,
-    DiagramComp,
+    // OutputForm,
+    // DiagramComp,
     InputForm,
     ContactForm,
   },
@@ -149,7 +120,7 @@ export default {
     },
 
     filterNotFound() {
-      return this.withOutDuplicates(this.items)
+      return this.withOutDuplicates(this.notFound)
     },
   },
   methods: {
@@ -249,7 +220,7 @@ export default {
 </script>
 <style>
   .contactForm{
-    padding-top: 18px;
+    padding-top: 30px;
     margin-right: 25px;
   }
   .text {
@@ -287,35 +258,6 @@ export default {
     margin-right: 30px;
   }
 
-  .result-block {
-    margin-top: 100px;
-  }
-
-  .not-found-block {
-    margin-top: 30px;
-  }
-
-  .result-information {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .result-item {
-    margin: 0 auto;
-    width: 270px;
-    padding: 8px 0;
-    text-align: center;
-    color: white;
-    background-color: #ff5252 !important;
-    border-color: #ff5252 !important;
-    box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%) !important;
-    border-radius: 4px;
-    font-weight: 500;
-    letter-spacing: 0.0892857143em;
-    text-transform: uppercase;
-    margin-bottom: 30px;
-    font-size: 12px;
-  }
 
 
 </style>

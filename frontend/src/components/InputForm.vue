@@ -9,11 +9,11 @@
         v-model="enteredText"
     ></v-textarea>
     <v-btn class="check-btn"
-           color="error"
+           color="teal lighten-1"
            elevation="3"
            x-large
            v-on:click="returnEnteredText"
-    >Проверить
+    ><span style="color: white;">Проверить</span>
     </v-btn>
   </div>
 </template>

@@ -1,5 +1,10 @@
 <template>
-  <v-row>
+  <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+  >
+    <v-row>
     <v-dialog
         v-model="dialog"
         max-width="600px"
@@ -7,11 +12,11 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
             class="d-flex align-self-center right"
-            color="error"
+            color="teal lighten-1"
             v-bind="attrs"
             v-on="on"
         >
-          Связаться с нами
+          <span style="color: white;">Связаться с нами</span>
         </v-btn>
       </template>
       <v-card>
@@ -28,16 +33,19 @@
               >
                 <v-text-field
                     label="Имя*"
+                    :counter="10"
+                    :rules="nameRules"
                     required
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
                     label="Email*"
+                    :rules="emailRules"
                     required
                 ></v-text-field>
               </v-col>
-              
+
                 <v-col
                  cols="12"
                   >
@@ -66,7 +74,7 @@
           <v-btn
               color="green"
               text
-              @click="dialog = false"
+              @click="sendFormResults"
           >
             Отправить
           </v-btn>
@@ -74,6 +82,7 @@
       </v-card>
     </v-dialog>
   </v-row>
+  </v-form>
 </template>
 <script>
 export default {
@@ -81,7 +90,35 @@ export default {
   data: () => ({
     dialog: false,
     textToAdd: "",
+    valid: true,
+    name: '',
+    nameRules: [
+      v => !!v || 'Name is required',
+      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+    ],
+    email: '',
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+    ],
   }),
+  methods:{
+    sendFormResults(){
+
+      this.valid = this.validate();
+      console.log(this.valid)
+      if(this.valid){
+        this.dialog = false;
+      }
+
+    },
+
+    validate () {
+      return this.$refs.form.validate()
+    },
+
+  },
+
   mounted() {
     if (this.cardData) {
       // console.log("Mounted", this.cardData)

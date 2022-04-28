@@ -22,7 +22,7 @@ export default {
           enabled: false,
         },
         title: {
-          text: "Данные о компонентах продукта",
+          text: "",
         },
         series: [
           {

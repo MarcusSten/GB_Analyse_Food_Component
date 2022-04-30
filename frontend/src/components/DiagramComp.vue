@@ -1,6 +1,10 @@
 <template>
   <div>
-    <DiagramChart :data="points"></DiagramChart>
+    <h2>Информация о составе продукта:</h2>
+    <div class="diagramBody">
+      <DiagramChart class="chart" :data="pointsIsFound"></DiagramChart>
+      <DiagramChart class="chart" :data="points"></DiagramChart>
+    </div>
   </div>
 </template>
 
@@ -9,6 +13,14 @@ import DiagramChart from "./DiagramChart";
 
 export default {
   name: "DiagramComp",
+
+  data() {
+    return {
+      intervalId: null,
+      pointsIsFound: [],
+      points: [],
+    }
+  },
   
   components: {
     DiagramChart,
@@ -36,13 +48,6 @@ export default {
     }
   },
 
-  data() {
-    return {
-      intervalId: null,
-      points: [],
-    }
-  },
-
   methods: {
     updateDiagram(obj) {
       let result = [];
@@ -57,13 +62,24 @@ export default {
 
       obj.items.map((elem) => {
         data[`n${elem.harmNum}`] += 1;
-        // result.push({name: elem.name, y: elem.harmNum});
       })
+      
       for (let i = 1; i <= 5; i++) {
         result.push({name: `Индекс ${i}`, y: data[`n${i}`]})
       }
-      
-      result.push({name: "Не найдено", y: obj.notFound, color: "#FF6666"})
+
+      this.pointsIsFound = [
+        {
+          name: "Не найдено",
+          y: obj.notFound,
+          color: "#FF6666"
+        },
+        {
+          name: "Найдено",
+          y: this.items.length,
+          color: "#77DD77"
+        }
+      ]
 
       this.points = result;
     },
@@ -76,3 +92,14 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.diagramBody {
+  display: flex;
+}
+
+.chart {
+  width: 450px;
+  height: 450px;
+}
+</style>

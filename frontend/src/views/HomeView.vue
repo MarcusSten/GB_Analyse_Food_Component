@@ -18,13 +18,9 @@
         <v-spacer></v-spacer>
 
         <div class="mobile">
-          <v-btn 
-            class="d-flex align-self-center mt-4 mr-4"
-            color="teal lighten-1"
-          >
-            <v-img src="../assets/email.svg"></v-img>
-            <!-- <ContactForm/> -->
-          </v-btn>
+          <ContactForm
+              class="d-flex align-self-center mt-4 mr-4"
+          />
           <v-btn
             class="d-flex align-self-center mt-4"
             color="teal lighten-1"

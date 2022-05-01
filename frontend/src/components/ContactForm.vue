@@ -10,14 +10,21 @@
         max-width="600px"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
-            class="d-flex align-self-center right"
-            color="teal lighten-1"
-            v-bind="attrs"
-            v-on="on"
-        >
-          <span style="color: white;">Связаться с нами</span>
-        </v-btn>
+                  <v-btn
+                    color="teal lighten-1"
+                    v-bind = "attrs"
+                    v-on="on"
+                  >
+                    <v-img
+                        v-if="isMobile()"
+                        src="../assets/email.svg"
+                    />
+                    <span
+                        v-else
+                        style="color: white;"
+                    >Связаться с нами</span>
+
+                  </v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -85,6 +92,7 @@
   </v-form>
 </template>
 <script>
+import { isMobile } from 'mobile-device-detect';
 export default {
   props:['cardData'],
   data: () => ({
@@ -103,6 +111,9 @@ export default {
     ],
   }),
   methods:{
+    isMobile(){
+      return isMobile;
+    },
     sendFormResults(){
 
       this.valid = this.validate();

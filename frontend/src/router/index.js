@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-// import ContactForm from '../views/ContactForm.vue'
+// import ContactForm from '../components/ContactForm.vue'
 import AboutView from "@/views/AboutView";
 
 Vue.use(VueRouter)

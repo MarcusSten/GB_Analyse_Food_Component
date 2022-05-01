@@ -10,20 +10,45 @@
               max-width="65"
               src="../assets/food (2).svg"></v-img>
         </v-app-bar-nav-icon>
-        <v-app-bar-title class=" align-center pl-6 d-none d-sm-flex d-sm-none mt-3">
-          <h2>Analyse <span style="color: #26A69A;">Food</span> Components</h2>
-        </v-app-bar-title>
-        <v-spacer></v-spacer>
-        <div class="contactForm">
-          <ContactForm/>
+          <v-app-bar-title class=" align-center pl-6 d-none d-sm-flex d-sm-none mt-3">
+        <div class="mobile-2">
+            <h2>Analyse <span style="color: #26A69A;">Food</span> Components</h2>
         </div>
-        <v-btn
-          class="d-flex align-self-center mt-4"
-          color="teal lighten-1"
-          to="/about"
+          </v-app-bar-title>
+        <v-spacer></v-spacer>
+
+        <div class="mobile">
+          <v-btn 
+            class="d-flex align-self-center mt-4 mr-4"
+            color="teal lighten-1"
           >
-          <span style="color: white;">О Проекте</span>
-        </v-btn>
+            <v-img src="../assets/email.svg"></v-img>
+            <!-- <ContactForm/> -->
+          </v-btn>
+          <v-btn
+            class="d-flex align-self-center mt-4"
+            color="teal lighten-1"
+            to="/about"
+          >
+            <v-img src="../assets/aboutus.svg"></v-img>
+          </v-btn>
+        </div>
+      
+        <div class="desktop">
+          <v-btn
+          x-small
+          class="d-flex align-self-center mt-4 mr-4">
+          <ContactForm/>
+          </v-btn>
+        
+          <v-btn
+            class="d-flex align-self-center mt-4"
+            color="teal lighten-1"
+            to="/about"
+            >
+            <span style="color: white;">О Проекте</span>
+          </v-btn>
+        </div>
       </v-col>
     </v-app-bar>
 
@@ -199,9 +224,28 @@ export default {
 
 </script>
 <style>
-  .contactForm{
-    padding-top: 30px;
-    margin-right: 25px;
+  .mobile{
+    display: flex;
+  }
+  @media (min-width:859px) {
+    .mobile{
+      display:none;
+    }
+    
+  }
+  .desktop{
+    display: flex;
+  }
+  @media (max-width:859px) {
+    .desktop{
+      display:none;
+    }
+  }
+
+  @media (max-width:669px) {
+    .mobile-2{
+      display:none;
+    } 
   }
   .text {
     color: black;

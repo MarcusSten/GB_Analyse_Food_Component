@@ -135,7 +135,7 @@ export default {
       this.result = {};
       this.isFound = [];
       this.notFound = [];
-      const regExp = /[,()—.]/;
+      const regExp = /[,()—.;:*-]/;
       this.separatedList = this.enteredText.split(regExp).map((el) => el.trim())
 
       this.separatedList.map(async (element) => {
@@ -197,7 +197,7 @@ export default {
       if (additiveName && additiveName.length){
 
         for (let i = 0; i <= badphrases.length; i++) {
-          if(additiveName.includes(badphrases[i]) == true) {
+          if(additiveName.includes(badphrases[i]) === true) {
             phrase = additiveName.replace(badphrases[i], '');
             break;
           } else {
@@ -213,8 +213,10 @@ export default {
               ...this.result
             })
         } catch (e){
-          this.result = {"name": phrase, "description": "Not Found"}
-          this.notFound.push(this.result)
+          if (phrase.length > 1) {
+            this.result = {"name": phrase, "description": "Not Found"}
+            this.notFound.push(this.result)
+          }
         }
       }
     }

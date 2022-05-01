@@ -16,26 +16,39 @@
     >
       <v-expansion-panel-header v-if="item.description !== 'Not Found'" class="item-title">
         {{ nameFormat(item.name, item.searchName) }}
-        <v-tooltip bottom color="white">
-          <template v-slot:activator="{ on, attrs }">
-                      <span
-                          v-bind="attrs"
-                          v-on="on"
-                      >
-                        <v-rating v-model="item.harmNum" class="rating">
-                          <template v-slot:item="props">
-                            <v-icon
-                                :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
-                                medium
-                            >
-                              {{ props.isFilled ? 'mdi-cards-heart' : 'mdi-cards-heart-outline' }}
-                            </v-icon>
-                          </template>
-                        </v-rating>
-                      </span>
+
+<!--        старый вариант работы tooltip -->
+<!--        <v-rating v-model="item.harmNum" class="rating">-->
+<!--          <template v-slot:item="props">-->
+<!--            <v-icon-->
+<!--                :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"-->
+<!--                medium-->
+<!--            >-->
+<!--              {{ props.isFilled ? 'mdi-cards-heart' : 'mdi-cards-heart-outline' }}-->
+<!--            </v-icon>-->
+<!--          </template>-->
+<!--        </v-rating>-->
+
+        <v-rating v-model="item.harmNum" class="rating">
+          <template v-slot:item="props">
+            <v-tooltip bottom color="white">
+              <template v-slot:activator="{ on, attrs }">
+                <span
+                    v-bind="attrs"
+                    v-on="on"
+                >
+                  <v-icon
+                      :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
+                      medium
+                  >
+                    {{ props.isFilled ? 'mdi-cards-heart' : 'mdi-cards-heart-outline' }}
+                  </v-icon>
+                </span>
+              </template>
+              <span class="item-title">Вред добавки - {{item.name}}</span>
+            </v-tooltip>
           </template>
-          <span class="item-title">Вред добавки - {{item.name}}</span>
-        </v-tooltip>
+        </v-rating>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <OutputForm

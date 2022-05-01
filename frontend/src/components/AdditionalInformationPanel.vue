@@ -1,7 +1,8 @@
 <template>
   <div class="result-block">
     <DiagramComp
-        :items="items"
+        :items="filterFound"
+        :notFound="filterNotFound.length"
         v-show="items.length !== 0"
     />
   </div>

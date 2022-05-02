@@ -20,6 +20,7 @@
         <div class="mobile">
           <ContactForm
               class="d-flex align-self-center mt-4 mr-4"
+              :is-mobile = "true"
           />
           <v-btn
             class="d-flex align-self-center mt-4"
@@ -31,12 +32,10 @@
         </div>
       
         <div class="desktop">
-          <v-btn
-          x-small
-          class="d-flex align-self-center mt-4 mr-4">
-          <ContactForm/>
-          </v-btn>
-        
+          <ContactForm
+              class="d-flex align-self-center mt-4 mr-4"
+              :is-mobile="false"
+          />
           <v-btn
             class="d-flex align-self-center mt-4"
             color="teal lighten-1"

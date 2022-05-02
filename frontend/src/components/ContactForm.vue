@@ -16,7 +16,7 @@
                     v-on="on"
                   >
                     <v-img
-                        v-if="isMobile()"
+                        v-if="isMobile"
                         src="../assets/email.svg"
                     />
                     <span
@@ -92,9 +92,8 @@
   </v-form>
 </template>
 <script>
-import { isMobile } from 'mobile-device-detect';
 export default {
-  props:['cardData'],
+  props:['cardData', 'isMobile'],
   data: () => ({
     dialog: false,
     textToAdd: "",
@@ -111,9 +110,7 @@ export default {
     ],
   }),
   methods:{
-    isMobile(){
-      return isMobile;
-    },
+
     sendFormResults(){
 
       this.valid = this.validate();

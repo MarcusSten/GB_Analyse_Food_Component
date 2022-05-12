@@ -1,13 +1,24 @@
 # GB_Analyse_Food_Component
 
+Description:
 
-harmful:
-    name: название (по классификации)
-    description: описание (подробное описание применения в пищевой промышленности)
-    synonym: альтернативные названия (часто встречаются на упаковках)
-    category: категория (функция пищевой добавки)
-    origin: происхождение (естественное или искуственно создано)
-    harm: вредные свойства (вред для организма человека)
-    harmNum: вред по 5-бальной шкале (де 1 - нет вреда, 2 - очень незначительный вред, 3 - незначительный вред, 4 - средний вред,  5 - очень вредна)
-    benefit: польза для организма (не отменяет возможный вред на другие органы или области)
-    link: ссылка на Wiki (не все ссылки рабочие)
+This application is designed to help the user learn more about the composition of the food product.
+
+Ability to enter product data
+    Various ways to enter information by the user
+    Request to add a new product or component
+
+Get information about each ingredient in the product
+    Brief information about each component and its usefulness
+    Links to articles about each component
+
+
+
+Usage:
+
+Backend
+    npm install
+    node index.js
+Frontend
+    npm install
+    npm run serve

@@ -2,7 +2,34 @@
   <v-app>
     <div class="about">
       <div>
+        <a href="https://github.com/MarcusSten/GB_Analyse_Food_Component/tree/main" target="_blank">
+          <i class='bx bxl-github'></i>
+        </a>
+      </div>
+      <div class="creators-block">
+        <h1>Creators</h1>
+        <div class="creators">
+          <v-avatar
+            color="teal lighten-1"
+            size="70"
+          >Артем</v-avatar>
+          <v-avatar
+            color="teal lighten-1"
+            size="70"
+          >Вика</v-avatar>
+          <v-avatar
+            color="teal lighten-1"
+            size="70"
+          >Влад</v-avatar>
+          <v-avatar
+            color="teal lighten-1"
+            size="70"
+          >Олег</v-avatar>
+        </div>
+      </div>
+      <div>
         <h1>Stack</h1>
+        <h3 class="mobile-text">VueJS + NodeJS + Vuetify</h3>
         <v-col class="d-flex justify-center">
           <div class="stack-container">
             <simple-flowchart :scene.sync="data"></simple-flowchart>
@@ -101,6 +128,55 @@
 <style>
   .stack-container {
     width: 500px;
+  }
+
+  .bx {
+    font-size: 50px !important;
+    color: #26A69A;
+  }
+
+  .bx:hover {
+    color: #48817b;
+  }
+
+  .creators-block {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  .mobile-text {
+    display: none;
+  }
+
+  @media screen and (max-width: 400px) {
+      .creators {
+        flex-direction: column;
+        align-items: center;
+        
+      }
+      .creators-block {
+        width: 100%;
+      }
+      .stack-container {
+        display: none;
+      }
+      .v-avatar {
+        margin-bottom: 20px;
+      }
+      .mobile-text {
+        display: block;
+      }
+  }
+
+  .v-avatar {
+    color: white;
+    font-weight: bold;
+  }
+
+  .creators {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
   }
 </style>
 

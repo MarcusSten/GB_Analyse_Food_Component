@@ -1,9 +1,9 @@
 <template>
   <div class="result-block">
     <DiagramComp
-        :items="filterFound"
-        :notFound="filterNotFound.length"
-        v-show="items.length !== 0"
+      :items="filterFound"
+      :notFound="filterNotFound.length"
+      v-show="isShow"
     />
   </div>
 </template>
@@ -12,16 +12,21 @@
 import DiagramComp from "@/components/DiagramComp";
 
 export default {
-  props: ['filterNotFound', 'filterFound', 'items'],
+  props: ["filterNotFound", "filterFound", "items"],
   name: "AdditionalInformationPanel",
-  components:{
-    DiagramComp
-  }
-}
+  components: {
+    DiagramComp,
+  },
+
+  computed: {
+    isShow() {
+      return this.filterFound.length !== 0;
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 .result-block {
   margin-top: 100px;
 }

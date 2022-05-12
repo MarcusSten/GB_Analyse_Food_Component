@@ -67,23 +67,21 @@
                </v-col>
             </v-row>
           </v-container>
-          <small>*указывает обязательное поле</small>
+          <div class="required-field"><small>*указывает обязательное поле</small></div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
               color="error"
-              text
               @click="dialog = false"
           >
             Отменить
           </v-btn>
           <v-btn
-              color="green"
-              text
+              color="teal lighten-1"
               @click="sendFormResults"
           >
-            Отправить
+            <span style="color: white;">Отправить</span>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -138,3 +136,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.required-field{
+  display: flex;
+  margin-left: 10px;
+}
+</style>

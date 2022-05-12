@@ -2,23 +2,29 @@
   <div>
     <h2>Информация о составе продукта:</h2>
     <div class="overall-result d-flex align-center justify-center">
-      <v-card class="overall-result-block d-flex justify-center align-center"
+      <v-card
+        class="overall-result-block d-flex justify-center align-center"
         color="teal lighten-1"
       >
         <v-icon
-            :color="overAllResultNum ? genColor(overAllResultNum) : 'grey lighten-1'"
-            x-large
+          :color="
+            overAllResultNum ? genColor(overAllResultNum) : 'grey lighten-1'
+          "
+          x-large
         >
           mdi-cards-heart
         </v-icon>
         <span class="num-all-hurm-result">{{ overAllResultNum }}</span>
       </v-card>
       <h3 class="ml-3">
-        Общий показатель состава продукта - <span :class="[colorsStyle[overAllResultNum - 1]]">{{ overAllResultTexts[overAllResultNum - 1] }}</span>
+        Общий показатель состава продукта -
+        <span :class="[colorsStyle[overAllResultNum - 1]]">{{
+          overAllResultTexts[overAllResultNum - 1]
+        }}</span>
       </h3>
     </div>
+
     <div class="diagramBody">
-      <DiagramChart class="chart" :data="pointsIsFound"></DiagramChart>
       <DiagramChart class="chart" :data="points"></DiagramChart>
     </div>
   </div>
@@ -36,36 +42,42 @@ export default {
       pointsIsFound: [],
       points: [],
       overAllResultNum: 0,
-      overAllResultTexts: ['безвредный', 'почти безвредный', 'вредный', 'очень вредный', 'яд'],
-      colors: ['light-green accent-3', 'lime accent-2', 'orange', 'orange darken-4', 'deep-orange darken-4'],
-      colorsStyle: ['light-green', 'lime', 'orange', 'orange', 'deep-orange']
-    }
+      overAllResultTexts: [
+        "яд",
+        "очень вредный",
+        "вредный",
+        "почти безвредный",
+        "безвредный",
+      ],
+      colors: ["#bd360c", "#e65100", "#f99800", "#eeff41", "#76ff03"],
+      colorsStyle: ["light-green", "lime", "orange", "orange", "deep-orange"],
+    };
   },
-  
+
   components: {
     DiagramChart,
   },
 
-  props: ['items', "notFound"],
+  props: ["items", "notFound"],
 
   watch: {
     items: function (newVal) {
       const res = {
         items: newVal,
-        notFound: this.notFound
-      }
+        notFound: this.notFound,
+      };
 
       this.updateDiagram(res);
     },
 
-    notFound: function(newVal) {
+    notFound: function (newVal) {
       const res = {
         items: this.items,
         notFound: newVal,
-      }
+      };
 
-      this.updateDiagram(res)
-    }
+      this.updateDiagram(res);
+    },
   },
 
   methods: {
@@ -73,49 +85,54 @@ export default {
       let result = [];
 
       const data = {
-        "n5": 0,
-        "n4": 0,
-        "n3": 0,
-        "n2": 0,
-        "n1": 0,
-      }
+        n5: 0,
+        n4: 0,
+        n3: 0,
+        n2: 0,
+        n1: 0,
+      };
 
       obj.items.map((elem) => {
         data[`n${elem.harmNum}`] += 1;
-      })
-      
-      for (let i = 1; i <= 5; i++) {
-        result.push({name: `Индекс ${i}`, y: data[`n${i}`]})
-      }
+      });
 
-      this.pointsIsFound = [
-        {
-          name: "Не найдено",
-          y: obj.notFound,
-          color: "#FF6666"
-        },
-        {
-          name: "Найдено",
-          y: this.items.length,
-          color: "#77DD77"
-        }
-      ]
+      for (let i = 1; i <= 5; i++) {
+        result.push({
+          name: this.overAllResultTexts[i - 1],
+          y: data[`n${i}`],
+          color: this.colors[i - 1],
+        });
+      }
 
       this.points = result;
       this.overAllResult();
     },
-    genColor (i) {
-      return this.colors[i - 1]
+
+    genColor(i) {
+      return this.colors[i - 1];
     },
+
     overAllResult() {
-        let sumHarmNum = 1 * this.points[0].y + 2 * this.points[1].y + 3 * this.points[2].y + 4 * this.points[3].y + 5 * this.points[4].y;
-        let sumComponents = this.points[0].y + this.points[1].y + this.points[2].y + this.points[3].y + this.points[4].y;
-        this.overAllResultNum = Math.round(sumHarmNum / sumComponents);
-        if (isNaN(this.overAllResultNum)) {
-          return this.overAllResultNum = 0;
-        } return this.overAllResultNum;
+      let sumHarmNum =
+        1 * this.points[0].y +
+        2 * this.points[1].y +
+        3 * this.points[2].y +
+        4 * this.points[3].y +
+        5 * this.points[4].y;
+      let sumComponents =
+        this.points[0].y +
+        this.points[1].y +
+        this.points[2].y +
+        this.points[3].y +
+        this.points[4].y;
+      this.overAllResultNum = Math.round(sumHarmNum / sumComponents);
+      if (isNaN(this.overAllResultNum)) {
+        return (this.overAllResultNum = 0);
+      }
+      return this.overAllResultNum;
     },
   },
+
   mounted() {
     this.$root.$on("updateDiagram", (items) => {
       this.updateDiagram(items);
@@ -127,11 +144,12 @@ export default {
 <style lang="scss" scoped>
 .diagramBody {
   display: flex;
+  justify-content: center;
 }
 
 .chart {
-  width: 450px;
-  height: 450px;
+  width: 600px;
+  height: 600px;
 }
 
 .overall-result {

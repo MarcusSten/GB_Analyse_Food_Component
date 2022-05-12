@@ -33,41 +33,32 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"
-              >
+              <v-col cols="12">
                 <v-text-field
-                    label="Имя*"
-                    :counter="10"
+                    label="Имя *"
                     :rules="nameRules"
                     required
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                    label="Email*"
+                    label="Email *"
                     :rules="emailRules"
                     required
                 ></v-text-field>
               </v-col>
-
-                <v-col
-                 cols="12"
-                  >
+              <v-col cols="12">
                   <v-textarea
                       outlined
                       auto-grow
                       rows="8"
                       label="Ваше предложение"
-                      hint = "Изложите ваши предложения"
                       v-model="textToAdd"
                   ></v-textarea>
                </v-col>
+              <v-col class="required-field" cols="5"><small>* - указывает обязательное поле</small></v-col>
             </v-row>
           </v-container>
-          <div class="required-field"><small>*указывает обязательное поле</small></div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -138,7 +129,12 @@ export default {
 </script>
 <style scoped>
 .required-field{
-  display: flex;
-  margin-left: 10px;
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+
+
+  margin: 0;
+  padding: 0;
 }
 </style>

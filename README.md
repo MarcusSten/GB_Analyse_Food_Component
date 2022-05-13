@@ -1,24 +1,28 @@
 # GB_Analyse_Food_Component
 
-Description:
+<h3>Description:</h3>
 
-This application is designed to help the user learn more about the composition of the food product.
+<p>This application is designed to help the user learn more about the composition of the food product.</p>
 
-Ability to enter product data
-    Various ways to enter information by the user
-    Request to add a new product or component
+<h4>Ability to enter product data</h4>
+    <ul>
+    <li>Various ways to enter information by the user</li>
+    <li>Request to add a new product or component</li>
+    </ul>
 
-Get information about each ingredient in the product
-    Brief information about each component and its usefulness
-    Links to articles about each component
+<h4>Get information about each ingredient in the product</h4>
+    <ul>
+    <li>Brief information about each component and its usefulness</li>
+    <li>Links to articles about each component</li>
+    </ul>
 
 
 
-Usage:
+<h3>Usage:</h3>
 
-Backend
-    npm install
-    node index.js
-Frontend
-    npm install
-    npm run serve
+<h4>Backend</h4>
+   <pre><p>npm install</p></pre>
+    <pre><p>node index.js</p></pre>
+<h4>Frontend</h4>
+    <pre><p>npm install</p></pre>
+    <pre><p>npm run serve</p></pre>

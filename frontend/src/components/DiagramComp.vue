@@ -98,9 +98,9 @@ export default {
 
       for (let i = 1; i <= 5; i++) {
         result.push({
-          name: this.overAllResultTexts[5 - i],
+          name: this.overAllResultTexts[i - 1],
           y: data[`n${i}`],
-          color: this.colors[5 - i],
+          color: this.colors[i - 1],
         });
       }
 

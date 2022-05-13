@@ -50,7 +50,7 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col cols="30" sm="6">
+          <v-col cols="30" md="6">
               <InputForm
                   title="Анализ компонентов"
                   v-on:changeEnteredText="check($event)"
@@ -61,7 +61,7 @@
                   v-bind:items = "items"
               />
           </v-col>
-          <v-col>
+          <v-col md="6">
               <HarmPanel
                   v-bind:is-found = "filterFound"
                 />

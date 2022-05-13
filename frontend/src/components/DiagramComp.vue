@@ -43,13 +43,13 @@ export default {
       points: [],
       overAllResultNum: 0,
       overAllResultTexts: [
-        "яд",
-        "очень вредный",
-        "вредный",
-        "почти безвредный",
         "безвредный",
+        "почти безвредный",
+        "вредный",
+        "очень вредный",
+        "яд",
       ],
-      colors: ["#bd360c", "#e65100", "#f99800", "#eeff41", "#76ff03"],
+      colors: ["#76ff03", "#eeff41", "#f99800", "#e65100", "#bd360c"],
       colorsStyle: ["light-green", "lime", "orange", "orange", "deep-orange"],
     };
   },
@@ -149,7 +149,6 @@ export default {
 
 .chart {
   width: 600px;
-  height: 600px;
 }
 
 .overall-result {
@@ -168,7 +167,7 @@ export default {
 
 .num-all-hurm-result {
   position: absolute;
-  color: white;
+  color: #2c3e50;
   font-weight: bold;
 }
 

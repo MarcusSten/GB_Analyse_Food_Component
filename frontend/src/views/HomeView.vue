@@ -114,10 +114,6 @@ export default {
     InputForm,
     ContactForm,
   },
-  mounted() {
-    console.log(process.env)
-    console.log(process.env.VUE_APP_API_ENDPOINT)
-  },
   computed: {
     filterFound(){
       return this.withOutDuplicates(this.isFound)

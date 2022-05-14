@@ -114,6 +114,10 @@ export default {
     InputForm,
     ContactForm,
   },
+  mounted() {
+    console.log(process.env)
+    console.log(process.env.VUE_APP_API_ENDPOINT)
+  },
   computed: {
     filterFound(){
       return this.withOutDuplicates(this.isFound)
@@ -201,7 +205,7 @@ export default {
         }
 
         try {
-          let response = await fetch("http://localhost:3001/names/" + phrase.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
+          let response = await fetch(process.env.VUE_APP_API_ENDPOINT + "/names/" + phrase.replace(/[.,-/#!$%^&*;:{}=\-_`~()@+?><[\]]/g, ''));
           this.result = await response.json()
             this.isFound.push({
               searchName: phrase[0].toUpperCase() + phrase.slice(1),
